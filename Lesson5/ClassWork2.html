@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html ng-app="interpolateApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap-theme.css" rel="stylesheet" />
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <style>
+        .showBlock{
+            margin:5%;
+        }
+        .showBlock *{
+            display:inline-block;
+        }
+    </style>
+    <script>
+        var app = angular.module('interpolateApp', []);
+        app.controller('interpolateCtrl', function ($scope, $interpolate) {
+            var template = "Hello my name is {{name}}";
+            $scope.data = { name: "<strong>Ivan</strong>" }
+
+            $scope.getName = function ($event) {
+                var result = $interpolate(template)($scope.data);
+                angular.element(document.querySelector('#result')).append(result);
+                angular.element($event.target).attr('disabled','true');
+            }
+
+        });
+    </script>
+</head>
+<body>
+    <div class="showBlock" ng-controller="interpolateCtrl">
+        <input type="button" class="btn btn-primary" value="Get Name" ng-click="getName($event)" />
+        <div id="result"></div>
+    </div>
+</body>
+</html>

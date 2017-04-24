@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html ng-app="intervalApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Interval</title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap-theme.css" rel="stylesheet" />
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        .wrapper{
+            text-align:center;
+            margin-top:50px;
+        }
+    </style>
+    <script>
+        var app = angular.module('intervalApp', []);
+        app.controller('intervalCtrl', function ($scope, $interval, $timeout) {
+            $scope.startCounter = function () {
+                $scope.incrementor = 0;
+                $scope.intervalPromise = $interval(function () {
+                    $scope.incrementor++;
+                }, 1000);
+            }
+            $scope.stopCounter = function () {
+                $scope.incrementor = 0;
+                $interval.cancel($scope.intervalPromise);
+            }
+        });
+    </script>
+</head>
+<body ng-controller="intervalCtrl">
+    <div class="wrapper">
+        <button class="btn btn-primary" ng-click="startCounter()">Start</button>
+        <button class="btn btn-danger" ng-click="stopCounter()">Stop</button>
+        <h1 ng-show="incrementor">Counter:{{incrementor}}</h1>
+    </div>
+</body>
+</html>

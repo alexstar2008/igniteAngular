@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html ng-app="routeApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Libraries/angular.js"></script>
+    <script src="Libraries/angular_route.js"></script>
+    <link href="Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        #wrapper{
+            width:60%;
+            margin:0 auto;
+            text-align:center;
+        }
+        .viewHeader{
+            color:lightcoral;
+        }
+        .toggleView{
+            border:2px solid green;
+        }
+    </style>
+    <script>
+        var app = angular.module('routeApp', ['ngRoute']);
+        app.config(function ($routeProvider) {
+            $routeProvider
+                .when('/viewOne', {
+                    templateUrl: 'Task/view1.html',
+                })
+                .when('/viewSecond', {
+                    templateUrl: 'Task/view2.html',
+                })
+                .otherwise({
+                    redirect: '/'
+                });
+        });
+        app.controller('routeCtrl', function ($scope) {
+
+        });
+    </script>
+</head>
+<body ng-controller="routeCtrl">
+    <div id="wrapper">
+        <ul class="nav">
+            <li><a href="#/viewOne">View1</a></li>
+            <li><a href="#/viewSecond">View2</a></li>
+        </ul>
+        <h1 class="viewHeader">Your view</h1>
+        <hr/>
+        <div ng-view class="toggleView"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html ng-app="navApp">
+<head>
+    <base href="/" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="Libraries/angular.js"></script>
+    <script src="Libraries/angular_route.js"></script>
+    <link href="Libraries/bootstrap.css" rel="stylesheet" />
+
+    <style>
+    </style>
+
+    <script>
+        var app = angular.module('navApp', ['ngRoute']);
+        app.controller('navCtrl', function ($scope) {
+            var people = [{ name: 'Vasya', age: 20, email: 'vasya@mail.ru', employed: false },
+                { name: 'Masha', age: 25, email: 'm@m', employed: true },
+                { name: 'Petya', age: 27, email: 'petya@stuff', employed: true },
+                { name: 'John', age: 36, email: 'johnDoe@mail', employed: true },
+                { name: 'Jane', age: 28, email: 'janeDoe@mail', employed: false }];
+            $scope.people = people;
+        });
+        app.config(function ($routeProvider,$locationProvider) {
+            $routeProvider
+                .when('/home', {
+                    templateUrl: 'Task/homePeople.html'
+                })
+                .when('/contact', {
+                    templateUrl: 'Task/contact.html',
+
+                })
+                .otherwise({
+                    redirect: '/'
+                });
+            $locationProvider.html5Mode(true);
+        });
+    </script>
+</head>
+<body ng-controller="navCtrl">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li class="nav-tabs"><a href="/home">Home</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div ng-view class="col-md-8 col-md-offset-2 text-center">
+
+    </div>
+</body>
+</html>

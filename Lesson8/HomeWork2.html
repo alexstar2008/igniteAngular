@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html ng-app="customApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+
+    <script>
+        var app = angular.module('customApp', []);
+        app.controller('mainCtrl', function ($scope) { });
+
+        app.directive('ulGenerator', function () {
+            return {
+                priority: 1,
+                restrict: 'A',
+                scope: {
+                    amount: '@ulGenerator'
+                },
+                link: function (scope, element, attribute) {
+                    scope.amountArr = [];
+                    var ul = angular.element('<ul>');
+                    for (var i = 0; i < scope.amount; i++) {
+                        ul.append(angular.element('<li class="gen">').text(i));
+                    }
+                    element.append(ul);
+                },
+              
+            }
+
+        });
+
+
+
+        app.directive('oddRed', function () {
+            return {
+                priority: 2,
+                restrict:'A',
+                link: function (scope, element, attributes) {
+                    var lis = document.getElementsByClassName('gen');
+                    for (var i = 0; i < lis.length; i++) {
+                        if (i % 2 == 0) {
+                            angular.element(lis[i]).addClass('red');
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div ul-generator="15" odd-red></div>
+</body>
+</html>

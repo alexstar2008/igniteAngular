@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html ng-app="countApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <script>
+        var app = angular.module('countApp',[]);
+        app.controller('countCtrl', function ($scope, counter) {
+            $scope.amountClicks = 0;
+            $scope.clickHandler = function () {
+                $scope.amountClicks = counter();
+            }
+        });
+        app.provider('counter', function () {
+            var counter = 0;
+            var step = 1;
+            return {
+                configStep:function(value){
+                    if (angular.isDefined(value))
+                        step = value;
+                },
+                $get: function () {
+                    return function(){
+                        return counter+=step;
+                    }
+                }
+            }
+        });
+        app.config(function (counterProvider) {
+            counterProvider.configStep(1);
+        });
+
+    </script>
+</head>
+<body ng-controller="countCtrl">
+  <div class="container">
+    <button ng-click="clickHandler()" class="btn btn-primary">Click me</button>
+    <h1>Amount Clicks: {{amountClicks}}</h1>
+  </div>
+</body>
+</html>

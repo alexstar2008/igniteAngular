@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html ng-app="chooseStyleApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        #wrapper {
+            width: 50%;
+            margin: 100px auto;
+        }
+
+        .inputBlock {
+            margin-top: 50px;
+        }
+
+        .letter {
+            font-family: Verdana;
+            font-style: italic;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .formal {
+            font-style: normal;
+            font-size: 14px;
+            font-family: "Times New Roman";
+        }
+
+        .bigEye {
+            font-size: 30px;
+            font-family: Verdana;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        var app = angular.module('chooseStyleApp', []);
+        app.controller('styleCtrl', ['$scope', function (a) {
+            a.stylePattern = {
+                letter: false,
+                formal: false,
+                bigEye: false
+            }
+            a.updateCurrent = function (value) {
+                console.log(value);
+                angular.forEach(a.stylePattern, function (item, key) {
+                    if (key == value) {
+                        a.stylePattern[key] = true;
+                    }
+                    else
+                        a.stylePattern[key] = false;
+                });
+            }
+        }]);
+    </script>
+</head>
+<body>
+    <div id="wrapper" ng-controller="styleCtrl">
+        <form>
+            <label class="checkbox-inline">
+                <input type="checkbox" ng-model="stylePattern.letter" ng-click="updateCurrent('letter')" />letter
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" ng-model="stylePattern.formal"  ng-click="updateCurrent('formal')"  />formal
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" ng-model="stylePattern.bigEye"  ng-click="updateCurrent('bigEye')"  />bigEye
+            </label>
+        </form>
+        <div class="btn-group">
+            <button ng-click="updateCurrent('letter')">letter</button>
+            <button ng-click="updateCurrent('formal')">formal</button>
+            <button ng-click="updateCurrent('bigEye')">bigEye</button>
+        </div>
+        <div class="inputBlock" ng-class="stylePattern">Text Block</div>
+    </div>
+</body>
+</html>

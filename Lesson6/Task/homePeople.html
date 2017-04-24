@@ -1,0 +1,24 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Age</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Employed</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="person in people" ng-click="gotoAutoForm(person)">
+            <td>{{person.name}}</td>
+            <td>{{person.age}}</td>
+            <td>{{person.email}}</td>
+            <td>{{person.employed}}</td>
+        </tr>
+    </tbody>
+</table>
+<form name="contactForm">
+ <label>username:   <input type="text" class="input-lg" name="userName"/></label>
+ <label>age:   <input type="text" class="input-lg" name="age" /></label>
+ <label>email: <input type="email" class="input-lg" name="userEmail" /></label>
+    <label>employed: <input type="checkbox" name="employed"></label>
+</form>

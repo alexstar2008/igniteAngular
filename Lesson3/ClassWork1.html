@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html ng-app="addClassApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        #wrapper{
+            margin:100px;
+            text-align:center;
+        }
+        .border{
+            border:2px solid green;
+        }
+        .back{
+            background-color:aqua;
+        }
+    </style>
+    <script>
+        var app = angular.module('addClassApp', []);
+        app.controller('classCtrl', function ($scope) {
+            $scope.classes = {
+                border: false,
+                back:false
+            };
+            $scope.addClasses = function () {
+                $scope.classes.border = true;
+                $scope.classes.back = true;
+            }   
+        });
+    </script>
+</head>
+<body ng-controller="classCtrl"> 
+    <div id="wrapper">
+        <div ng-class="classes">I'm a DIV</div>
+        <button class="btn" ng-click="addClasses()">Add classes</button>
+    </div>
+</body>
+</html>

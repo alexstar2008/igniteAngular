@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html ng-app="formApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        #wrapper {
+            width: 50%;
+            margin: 100px auto;
+            background-color: transparent;
+        }
+        form .ng-valid.ng-dirty{
+            background-color:lightgreen
+        }
+        form .ng-invalid.ng-dirty{
+            background-color:lightcoral;
+        }
+        .error{
+            color:red;
+        }
+    </style>
+    <script>
+        var app = angular.module('formApp', []);
+        app.controller('formCtrl', function ($scope) {
+            $scope.fio = /^[а-яА-Я ]+$/;
+            $scope.phone = /^[0-9-+]+$/;
+            $scope.checkPass = function (e) {
+                var currentKey = String.fromCharCode(e.charCode);
+                if (($scope.person.pass != $scope.person.passConfirm + currentKey)) {
+                    $scope.registr.passConfirm.$setValidity("ccNumber", false);
+                } else {
+                    $scope.registr.passConfirm.$setValidity("ccNumber", true);
+                }
+            }
+
+            $scope.showError = function (err) {
+                if (angular.isDefined(err)) {
+                    if (err.required) {
+                        return 'Введите данные';
+                    }
+                }
+            }
+        });
+
+
+    </script>
+</head>
+<body>
+    <div id="wrapper" ng-controller="formCtrl">
+
+
+        <form name="registr" novalidate>
+            <div class="form-group ">
+                <label for="example-text-input" class="col-2 col-form-label">ФИО</label>
+                <div class="col-10">
+                    <input class="form-control" type="text"  id="example-text-input"
+                           ng-pattern="fio" ng-model="person.Personal" required name="personal" placeholder="Иван Иванович">
+                </div>
+                <p class="error text-center" ng-show="registr.personal.$invalid && registr.personal.$dirty">{{showError(registr.personal.$error)}}</p>
+
+            </div>
+            <div class="form-group ">
+                <label >Email</label>
+                <div class="col-10">
+                    <input class="form-control" type="email" id="example-email-input" ng-model="person.email" name="email" required placeholder="ivanov@gmail.com">
+                </div>
+                <p class="error text-center" ng-show="registr.email.$invalid && registr.email.$dirty">{{showError(registr.email.$error)}}</p>
+            </div>
+            <div class="form-group ">
+                <label >Телефон</label>
+                <div class="col-10">
+                    <input class="form-control" type="tel"  id="example-tel-input"
+                           ng-pattern="phone" ng-model="person.phone" name="tel" required placeholder="+38-098-111-11-11">
+                </div>
+                <p class="error text-center" ng-show="registr.tel.$invalid && registr.tel.$dirty">{{showError(registr.tel.$error)}}</p>
+
+            </div>
+            <div class="form-group">
+                <label >Пароль</label>
+                <div class="col-10">
+                    <input class="form-control" type="password" value="" id="example-password-input" required ng-model="person.pass" placeholder="****"
+                           name="pass">
+                </div>
+                <p class="error text-center" ng-show="registr.pass.$invalid && registr.pass.$dirty">{{showError(registr.pass.$error)}}</p>
+            </div>
+            <div class="form-group ">
+                <label >Подтверждение пароля</label>
+                <div class="col-10">
+                    <input class="form-control" type="password" value="" id="example-password-input" required placeholder="****"
+                       ng-model="person.passConfirm" ng-keypress="checkPass($event)"  name="passConfirm" >
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" ng-disabled="registr.$invalid">Регистрация</button>
+        </form>
+
+    </div>
+</body>
+</html>

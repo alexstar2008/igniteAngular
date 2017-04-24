@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html ng-app="tableApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <meta charset="utf-8" />
+    <style>
+        form {
+            text-align: center;
+            margin: 40px 0;
+        }
+    </style>
+    <script>
+        var app = angular.module('tableApp', []);
+        app.controller('tableCtrl', function ($scope) {
+            $scope.items = [
+                { name: "B Item", price: 10.9, category: "Category 1", count: 10, tax: 1.12, expiration: 10 },
+                { name: "A Item", price: 1.1, category: "Category 1", count: 8, tax: 0.55, expiration: 12 },
+                { name: "D Item", price: 2.6, category: "Category 2", count: 7, tax: 0.22, expiration: 5 },
+                { name: "C Item", price: 17.5, category: "Category 2", count: 33, tax: 2.77, expiration: 10 }];
+
+            $scope.inputs = [
+                { name: 'name',  url: "include.html" ,urlHead : "head.html"},
+                { name: 'price', url: "include.html", urlHead: "head.html" },
+                { name: 'category', url: "include.html", urlHead: "head.html" },
+                { name: 'count', url: "include.html", urlHead: "head.html" },
+                { name: 'tax', url: "include.html", urlHead: "head.html" }
+            ];
+            $scope.toggleVisible = function (input) {
+                if (!input.url) {
+                    input.url = "include.html";
+                    input.urlHead = "head.html";
+                }
+                else {
+                    input.url = "";
+                    input.urlHead = "";
+                }
+            }
+        });
+
+    </script>
+</head>
+<body ng-controller="tableCtrl">
+    <form>
+        <h1>Change cheboxes</h1>
+        <label ng-repeat="input in inputs" class="checkbox-inline">
+            <input type="checkbox" checked value="{{input.name}}" ng-click="toggleVisible(input)" />
+            {{input.name}}
+        </label>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th ng-repeat="input in inputs">
+                    <ng-include src="input.urlHead"></ng-include>
+                </th>
+                <th>
+                    expiration
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in items">
+                <td ng-repeat="input in inputs">
+                    <ng-include src="input.url"></ng-include>
+                </td>
+                <td>
+                    {{item.expiration}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

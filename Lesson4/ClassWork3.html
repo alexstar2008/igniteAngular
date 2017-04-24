@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html ng-app="httpReadApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        p{
+            font-size:50px;
+            margin:150px;
+            color:red;
+            text-align:center;
+        }
+
+    </style>
+    <script>
+        var app = angular.module('httpReadApp', []);
+        app.controller('httpGetCtrl', function ($scope, $http) {
+            var promise = $http.get('data/data.json');
+            promise.then(fullfilled, reject);
+
+            function fullfilled(response) {
+                $scope.items = response.data;
+            }
+            function reject(error) {
+                $scope.msgError = error.statusText;
+                $scope.codeError = error.status;
+            }
+        });
+    </script>
+</head>
+<body ng-controller="httpGetCtrl">
+    <div class="row" ng-hide="msgError" style="margin-top:50px;">
+        <div class="col-md-8 col-md-offset-2">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in items">
+                        <td>{{item.name}}</td>
+                        <td>{{item.price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p ng-show="msgError">Error! Code:{{codeError}}<br/> Message:{{msgError}}</p>
+</body>
+</html>

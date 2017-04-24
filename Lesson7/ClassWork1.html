@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html ng-app="userListApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <script type="text/ng-template" id="templateList">
+        <ul>
+            <li ng-repeat="item in items track by $index">
+                {{item}}
+            </li>
+        </ul>
+    </script>
+
+    <script>
+        var app = angular.module('userListApp', []);
+        app.controller('mainCtrl', function ($scope) {
+            $scope.names = ['Alex', 'John', 'Vasia'];
+        });
+        app.directive('listDirective', function () {
+            return {
+                restrict: 'A',
+                template: function () {
+                    return angular.element(document.getElementById('templateList')).html();
+                },
+                scope: {
+                    items:"=inputArray"
+                }
+            };
+        });
+    </script>
+</head>
+<body ng-controller="mainCtrl">
+    <div list-directive input-array="names" ></div>
+</body>
+</html>

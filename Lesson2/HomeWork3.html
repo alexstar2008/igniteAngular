@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html ng-app="spaApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        form {
+            margin-left: 5%;
+            margin-top: 50px;
+        }
+        #sendButton{
+            margin-top:50px;
+        }
+
+        .resultBlock {
+            width: 20%;
+            border: 2px solid green;
+            border-radius: 5px;
+            margin: 0 auto;
+            margin-top:50px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .answersBlock {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+    <script>
+        var app = angular.module('spaApp', []);
+        app.controller('testCtrl', function ($scope) {
+            $scope.question = 1;
+            $scope.showResult = false;
+            $scope.capitalsIsrael = [
+                { name: 'Иерусали́м', checked: false, correct: true },
+                { name: 'Тель-Авив', checked: false },
+                { name: 'Амман', checked: false },
+                { name: 'Ереван', checked: false },
+            ];
+            $scope.capitalsAmerica = [
+               { name: 'Нью-Йорк', checked: false },
+               { name: 'Вашингтон', checked: false, correct: true },
+               { name: 'США', checked: false },
+               { name: 'Бостон', checked: false },
+            ];
+            $scope.capitalsMadagaskar = [
+              { name: 'Мадагаскар', checked: false },
+              { name: 'Милан', checked: false },
+              { name: 'Амман', checked: false },
+              { name: 'Антананариву', checked: false, correct: true },
+            ];
+            $scope.capitalsGeorgia = [
+              { name: 'Иерусали́м', checked: false },
+              { name: 'Тель-Авив', checked: false },
+              { name: 'Тбилиси', checked: false, correct: true },
+              { name: 'Ереван', checked: false },
+            ];
+            $scope.capitalsBelgium = [
+                { name: 'Брюссель', checked: false, correct: true },
+                { name: 'Бельгия', checked: false },
+                { name: 'Вена', checked: false },
+                { name: 'Вильнюс', checked: false },
+            ];
+
+            $scope.updateSelected = function (index, capitals) {
+                angular.forEach(capitals, function (capital, pos) {
+                    if (pos != index)
+                        capital.checked = false;
+                });
+            }
+            $scope.checkAnswers = function () {
+                $scope.amountCorrect = 0;
+                angular.forEach($scope.capitalsIsrael, function (capital) {
+                    if (!!capital.checked) {
+                        if (capital.correct)
+                            $scope.amountCorrect++;
+                    }
+                });
+                angular.forEach($scope.capitalsAmerica, function (capital) {
+                    if (!!capital.checked) {
+                        if (capital.correct)
+                            $scope.amountCorrect++;
+                    }
+                });
+                angular.forEach($scope.capitalsMadagaskar, function (capital) {
+                    if (!!capital.checked) {
+                        if (capital.correct)
+                            $scope.amountCorrect++;
+                    }
+                });
+                angular.forEach($scope.capitalsGeorgia, function (capital) {
+                    if (!!capital.checked) {
+                        if (capital.correct)
+                            $scope.amountCorrect++;
+                    }
+                });
+                angular.forEach($scope.capitalsBelgium, function (capital) {
+                    if (!!capital.checked) {
+                        if (capital.correct)
+                            $scope.amountCorrect++;
+                    }
+                });
+                $scope.showResult = true;
+            }
+        });
+    </script>
+</head>
+<body ng-controller="testCtrl">
+    <form>
+        <label>Выберите вопрос</label>
+        <div class="radio">
+            <label><input type="radio" name="optradio" ng-model="question" value="1">Вопрос 1</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" ng-model="question" value="2">Вопрос 2</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" ng-model="question" value="3">Вопрос 3</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" ng-model="question" value="4">Вопрос 4</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="optradio" ng-model="question" value="5">Вопрос 5</label>
+        </div>
+    </form>
+    <div class="answersBlock">
+        <div ng-switch="question">
+            <div ng-switch-when="1">
+                <label>Столица Израиля</label><br />
+                <label class="checkbox-inline" ng-repeat="capitalIsrael in capitalsIsrael">
+                    <input type="checkbox" ng-model="capitalIsrael.checked" value="{{capitalIsrael.name}}"
+                           ng-click="updateSelected($index,capitalsIsrael)">{{capitalIsrael.name}}
+                </label>
+            </div>
+        <div ng-switch-when="2">
+            <label>Столица США</label><br/>
+            <label class="checkbox-inline" ng-repeat="capitalAmerica in capitalsAmerica">
+                <input type="checkbox" ng-model="capitalAmerica.checked" value="{{capitalAmerica.name}}"
+                       ng-click="updateSelected($index,capitalsAmerica)">{{capitalAmerica.name}}
+            </label>
+        </div>
+        <div ng-switch-when="3">
+            <label>Столица Мадагаскара</label><br />
+            <label class="checkbox-inline" ng-repeat="capitalMadagaskar in capitalsMadagaskar">
+                <input type="checkbox" ng-model="capitalMadagaskar.checked" value="{{capitalMadagaskar.name}}"
+                       ng-click="updateSelected($index,capitalsMadagaskar)">{{capitalMadagaskar.name}}
+            </label>
+        </div>
+        <div ng-switch-when="4">
+            <label>Столица Грузии</label><br />
+            <label class="checkbox-inline" ng-repeat="capitalGeorgia in capitalsGeorgia">
+                <input type="checkbox" ng-model="capitalGeorgia.checked" value="{{capitalGeorgia.name}}"
+                       ng-click="updateSelected($index,capitalsGeorgia)">{{capitalGeorgia.name}}
+            </label>
+
+        </div>
+        <div ng-switch-when="5">
+            <label>Столица Бельгии</label><br />
+            <label class="checkbox-inline" ng-repeat="capitalBelgium in capitalsBelgium">
+                <input type="checkbox" ng-model="capitalBelgium.checked" value="{{capitalBelgium.name}}"
+                       ng-click="updateSelected($index,capitalsBelgium)">{{capitalBelgium.name}}
+            </label>
+        </div>
+        <button class="btn btn-info" ng-click="checkAnswers()" id="sendButton">Send to check</button>
+        <div class="resultBlock" ng-show="showResult">
+            <h3>Correct Answers :{{amountCorrect}}/5</h3>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

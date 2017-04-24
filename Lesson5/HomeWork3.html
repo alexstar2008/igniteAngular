@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html ng-app="anchorApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap-theme.css" rel="stylesheet" />
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.js"></script>
+    <style>
+        nav {
+            position: fixed;
+        }
+
+        ul {
+            background-color: white;
+            list-style-type: none;
+            cursor: pointer;
+            color: green;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            border-bottom: 2px solid green;
+        }
+
+        li {
+            padding: 20px;
+        }
+        a{
+            text-decoration:none;
+        }
+
+            li:last-child {
+                border-right: 2px solid green;
+            }
+
+            li:hover {
+                background-color: lightcoral;
+            }
+
+            .active{
+                               background-color: lightcoral;
+            }
+
+        .formal {
+            width: 100%;
+            box-sizing: border-box;
+            height: 650px;
+            border-top: 2px solid green;
+            text-align: center;
+            font-size: 2em;
+            color: lightcoral;
+        }
+    </style>
+    <script>
+        var app = angular.module('anchorApp', ['duScroll']);
+        app.controller('anchorCtrl',function($scope,$anchorScroll,$location,$document){
+            $scope.items = [
+                {id:'home',name:'Home'},
+                {id:'about',name:'About'},
+                {id:'works',name:'Works'},
+                {id:'contacts',name:'Contacts'},
+            ];
+            $location.path('');
+            $scope.gotoAnchor = function ($id) {
+                $document.scrollToElementAnimated(document.getElementById($id),0,650);
+            }
+        });
+    </script>
+</head>
+<body ng-controller="anchorCtrl">
+    <nav>
+        <ul>
+          <a ng-click="gotoAnchor(item.id)" href="#{{item.id}}"  ng-repeat="item in items"  du-scrollspy >
+            <li>
+                {{item.name}}
+            </li>
+          </a>
+
+        </ul>
+    </nav>
+    <div id="wrapper">
+        <div ng-repeat="item in items" id="{{item.id}}" class="formal" >
+            {{item.name}}
+        </div>
+    </div>
+
+</body>
+</html>

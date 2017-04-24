@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html ng-app="tableApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        .tableCustom{
+                margin:25px;
+        }
+        .tableCustom tr{
+            text-align:center;
+            border:2px solid grey;
+        
+        }
+    </style>
+    <script>
+        var app = angular.module('tableApp', []);
+        app.controller('mainCtrl', function ($scope) {
+            $scope.data = [
+                { name: 'alex', age: 17 },
+                { name: 'john', age: 13 }
+            ];
+        });
+        app.directive('tableGenerator', function () {
+            return {
+                link:function (scope, element, attributes) {
+                    var items = scope[attributes["items"]];
+                    if (angular.isDefined(items)) {
+                        var table = angular.element('<table class="table tableCustom">');
+                        angular.element(element).append(table);
+                        for (var i = 0; i < items.length; i++) {
+                            var row = angular.element('<tr>');
+                            console.log(items[i]);
+                            angular.forEach(items[i],function (item) {
+                                var td = angular.element('<td>');
+                                td.text(item);
+                                row.append(td);
+                            });  
+                            table.append(row);
+                        }
+                    }
+                
+                }
+            }
+  
+        });
+    </script>
+</head>
+<body ng-controller="mainCtrl">
+    <div class="container" table-generator items="data"></div>
+</body>
+</html>

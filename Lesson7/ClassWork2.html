@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html ng-app="formingApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <script type="text/ng-template" id="formTemplate">
+        <div class="container">
+            <form>
+                <h1>Registration form</h1>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
+                </div>
+                <div class="form-group">
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" name="login" class="form-control" placeholder="Login" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" />
+                </div>
+                <button type="submit" class="btn btn-primary">Send data</button>
+            </form>
+        </div>
+    </script>
+
+    <script>
+        var app = angular.module('formingApp', []);
+        app.directive('formGenerator', function () {
+            return {
+                restrict: 'EA',
+                replace: true,
+                template: function () {
+                    return angular.element(document.getElementById('formTemplate')).html();
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <form-generator></form-generator>
+</body>
+</html>

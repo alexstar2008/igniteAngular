@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html ng-app="formingApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <style>
+        form .ng-valid.ng-dirty {
+            background-color: lightgreen;
+        }
+
+        form .ng-invalid.ng-dirty {
+            background-color: lightcoral;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+
+    <script type="text/ng-template" id="formTemplate">
+        <div class="container">
+            <form name="regForm" novalidate>
+                <h1>Registration form</h1>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" ng-pattern="username"
+                           ng-model="registr.username" class="form-control" placeholder="Username" required/>
+                    <p ng-show="regForm.username.$invalid && regForm.username.$dirty" class="error">Error of input</p>
+                </div>
+                <div class="form-group">
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" name="login" ng-pattern="login"
+                           ng-model="registr.login" class="form-control" placeholder="Login" required />
+                    <p ng-show="regForm.login.$invalid && regForm.login.$dirty" class="error">Error of input</p>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password"  ng-pattern="password"
+                           ng-model="registr.password" class="form-control" placeholder="Password (6-12 symbols)" required />
+                    <p ng-show="regForm.password.$invalid && regForm.password.$dirty" class="error">Error of input</p>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" ng-pattern="email"
+                           ng-model="registr.email" class="form-control" placeholder="Email" required/>
+                    <p ng-show="regForm.email.$invalid && regForm.email.$dirty" class="error">Error of input</p>
+                </div>
+                <button type="submit" class="btn btn-primary">Send data</button>
+            </form>
+        </div>
+    </script>
+
+    <script>
+        var app = angular.module('formingApp', []);
+        app.directive('formGenerator', function () {
+            return {
+                restrict: 'EA',
+                replace: true,
+                scope:true,
+                template: function () {
+                    return angular.element(document.getElementById('formTemplate')).html();
+                },
+                link: function (scope,element,attributes) {
+                    scope.username = /^[a-zA-Z ]+$/;
+                    scope.password = /^[0-9a-zA-Z]{6,12}$/;
+                    scope.email = /^\S+@\S+$/;
+                    scope.login = /^[a-zA-Z0-9_]+$/;
+
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <form-generator></form-generator>
+</body>
+</html>

@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html ng-app="transcludeApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <style>
+        .wrapper{
+            text-align:center;
+            margin-top:100px;
+        }
+    </style>
+
+    <script type="text/ng-template" id="buttonTemplate">
+        <button class="btn btn-primary" ng-transclude></button>
+    </script> 
+
+    <script>
+        var app = angular.module('transcludeApp',[]);
+        app.directive('buttonGenerate', function () {
+            return {
+                transclude: true,
+                restrict: 'AE',
+                template: angular.element(document.getElementById('buttonTemplate')).html(),
+            }       
+        })
+
+    </script>
+</head>
+<body>
+    <div class="container wrapper">
+        <div button-generate>myButton</div>
+    </div>
+</body>
+</html>

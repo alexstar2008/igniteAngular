@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html ng-app="navApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+
+    <script type="text/ng-template" id="navTemplate">
+        <nav class="navbar navbar-default" ng-click="show">
+            <ul class="nav navbar-nav">
+                <li ng-repeat="item in items">
+                    <a href="" class="nav_items">{{item.name}}</a>
+                </li>
+            </ul>
+        </nav>
+    </script>
+
+    <script>
+        var app = angular.module('navApp', []);
+        app.controller('mainCtrl', function ($scope, $filter) {
+            $scope.items = [
+                { name: "Table", price: 44.10 },
+                { name: "Chair", price: 21.20 },
+                { name: "Pillow", price: 12.20 },
+                { name: "Picture", price: 112.70 },
+                { name: "Lamp", price: 28.31 }
+            ];
+            $scope.price = 0;
+
+        });
+        app.filter('findPriceByName', function () {
+            return function (arr, item) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].name == item) {
+                        return arr[i].price;
+                    }
+                }
+                return null;
+            }
+        })
+        app.directive('navGeneration', function () {
+            return {
+                priority: 1,
+                //template: angular.element(document.getElementById('navTemplate')).html(),
+                link: function (scope, element, attributes, $filter, $document) {
+                    var nav = angular.element('<nav class="navbar navbar-default">');
+                    var ul = angular.element('<ul class="nav navbar-nav">');
+                    for (var i = 0; i < scope.items.length; i++) {
+                        var li = angular.element('<li>');
+                        var a = angular.element('<a href="" class="nav_items">');
+                        a.text(scope.items[i].name);
+                        li.append(a);
+                        ul.append(li);
+                    }
+                    nav.append(ul);
+                    element.append(nav);
+
+                },
+            };
+        });
+        app.directive('contentShow', ['$filter', '$compile', function ($filter, $compile) {
+            return {
+                priority: 2,
+
+                link: function (scope, element, attributes) {
+                    var navItems = document.getElementsByClassName('nav_items');
+                    for (var i = 0; i < navItems.length; i++) {
+                        (angular.element(navItems[i])).on('click', function ($event) {
+
+                                $event.preventDefault();
+                                var price = $filter('findPriceByName')(scope.items, angular.element($event.currentTarget).text());
+
+                                var resultBlock = document.getElementsByClassName('res')[0];
+                                if (!resultBlock) {
+                                    resultBlock = angular.element('<h2 class="res">');
+                                    angular.element(document.body).append(resultBlock);
+                                }
+                                angular.element(resultBlock).text(price);
+                    
+                             
+
+                        })
+
+                    }
+                },
+
+            }
+        }]);
+    </script>
+</head>
+<body ng-controller="mainCtrl">
+    <div nav-generation content-show></div>
+</body>
+</html>

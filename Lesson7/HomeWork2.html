@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html ng-app="parApp"> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <script type="text/ng-template" id="parTemplate">
+        <p ng-repeat="item in items">
+            {{item}}
+        </p>
+    </script>
+
+    <script>
+        var app = angular.module('parApp', []);
+        app.controller('mainCtrl', function ($scope) {
+            $scope.data = [1, 2, 3];
+        });
+        app.directive('parGenerator', function () {
+            return {
+                replace: true,
+                restrict: 'A',
+                scope: {
+                    items:'=parGenerator'
+                },
+                template: function () {
+                    return angular.element(document.getElementById('parTemplate')).html();
+                }
+            }
+        });
+    </script>
+</head>
+<body ng-controller="mainCtrl">
+    <div par-generator="data">
+    </div>
+
+</body>
+</html>

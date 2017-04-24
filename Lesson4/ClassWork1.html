@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html ng-app="countApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <script>
+        var app = angular.module('countApp',[]);
+        app.controller('countCtrl', ['$scope', 'counterFactory', function ($scope, counterFactory) {
+            $scope.amountClicks = 0;
+            $scope.clickHandler = function () {
+                $scope.amountClicks = counterFactory();
+            }
+        }]);
+        app.factory('counterFactory', function () {
+            var counter  = 0;
+            return function () {
+                return counter++;
+            }
+        });
+    </script>
+</head>
+<body ng-controller="countCtrl">
+  <div class="container">
+    <button ng-click="clickHandler()" class="btn btn-primary">Click me</button>
+    <h1>Amount Clicks: {{amountClicks}}</h1>
+  </div>
+</body>
+</html>

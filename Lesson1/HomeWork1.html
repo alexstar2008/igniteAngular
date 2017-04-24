@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="toDoApp">
+<head>
+    <title>ToDo List (Task2)</title>
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../Libraries/bootstrap-theme.css" rel="stylesheet" />
+    <script>
+        var model = {
+            tasks:[
+		              {name:'Купить молоко',desc:'Сходить на рынок и купить молоко',date:'2/18/2015',completed:''},
+		              {name:'Посмотреть видео урок по AngularJS',desc:'Досмотреть до конца урок на itvdn.com',date:'2/18/2015',completed:''}
+	          ]
+        };
+        var app = angular.module('toDoApp', []);
+        app.controller('formCtrl', function ($scope) {
+            $scope.data = model;
+
+            $scope.submitHandler = function () {
+                $scope.data.tasks.push({
+                    name: $scope.name,
+                    desc: $scope.desc,
+                    date: $scope.dueDate,
+                    completed: $scope.completed ? "Yes" : "No"
+                });
+                $scope.name = '';
+                $scope.desc = '';
+                $scope.dueDate = '';
+                $scope.completed = '';
+            }
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <div class="container" ng-controller="formCtrl">
+
+        <h3>ToDo List</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in data.tasks">
+                    <td>{{task.name}}</td>
+                    <td>{{task.desc}}</td>
+                    <td>{{task.date}}</td>
+                    <td>{{task.completed}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+        <div>
+
+            <form ng-submit="submitHandler()" name="taskForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" ng-model="name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="dueDate">Due Date</label>
+                    <input type="text" id="dueDate" ng-model="dueDate" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="desc">Description</label>
+                    <textarea class="form-control" id="desc" ng-model="desc" rows="3"></textarea>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        Completed
+                    </label><br/>
+                        <input type="checkbox" class="form-check-input" ng-model="completed">
+                </div>
+                <button type="submit" class="btn" >Add</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

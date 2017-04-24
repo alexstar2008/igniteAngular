@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html ng-app="timerApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <style>
+        .wrapper {
+            margin-top: 50px;
+        }
+    </style>
+
+    <script type="text/ng-template" id="clickTemplate">
+        <button ng-click="startCounter()" class="btn btn-primary">Start counter</button>
+        <h2>Counter:{{counter}}</h2>
+    </script>
+
+    <script>
+        var app = angular.module('timerApp', []);
+        app.controller('timerCtrl', function ($scope, $interval) {
+            $scope.interval = null;
+            $scope.counter = 0;
+            $scope.startCounter = function () {
+                if ($scope.interval!==null) {
+                    return;
+                }
+                $scope.counter = 0;
+                $scope.interval = $interval(function () {
+                    $scope.counter++;
+                }, 1000);
+                
+            }
+            this.getScope = function () {
+                return $scope;
+            }
+        });
+        app.directive('timerDirective', function () {
+            return {
+                scope: {},
+                template: angular.element(document.getElementById('clickTemplate')).html(),
+                controller: 'timerCtrl',
+            }
+        });
+        app.directive('consoleTimer', function () {
+            return {
+                require: 'timerDirective',
+                link: function (scope, element, attributes, timerCtrl) {
+                    timerCtrl.getScope().$watch('counter', function (newValue, oldValue) {
+                        console.log(newValue);
+                    });
+                }
+            }
+        });
+
+
+    </script>
+</head>
+<body>
+    <div class="container wrapper">
+        <div timer-directive console-timer></div>
+        
+    </div>
+</body>
+</html>

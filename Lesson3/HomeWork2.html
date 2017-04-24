@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html ng-app="filterDivApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <style>
+        #wrapper {
+            width: 50%;
+            margin: 100px auto;
+            background-color: transparent;
+        }
+
+        div {
+            background-color: green;
+            margin:10px;
+            color:white;
+            text-align:center;
+        }
+        button,input{
+            color:black;
+        }
+    </style>
+    <script>
+        var app = angular.module('filterDivApp', []);
+        app.controller('filtrCtrl', function ($scope) {
+            $scope.items = [
+                { text: 'One' },
+                { text: 'One' },
+                { text: 'Three' },
+                { text: 'Four' },
+                { text: 'Five' },
+                { text: 'Six' },
+                { text: 'Eight' },
+                { text: 'Eight' },
+                { text: 'Nine' },
+                { text: 'Nine' },
+            ];
+            $scope.checkText = function (item) {
+                if (!$scope.filtrText)
+                    return item;
+                if (item.text == $scope.filtrText) {
+                    return item;
+                }
+            }
+            $scope.setFiltrText = function () {
+                $scope.filtrText = $scope.enteredText;
+            }
+        });
+
+    </script>
+</head>
+<body>
+    <div id="wrapper" ng-controller="filtrCtrl">
+
+        <input type="text" ng-model="enteredText" />
+        <button ng-click="setFiltrText()">Filter</button>
+
+        <div ng-repeat="item in  items | filter: checkText ">
+            {{item.text}}
+        </div>
+
+
+    </div>
+</body>
+</html>

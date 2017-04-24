@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html ng-app="showInputApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    
+    <style>
+       p{
+            width:100%;
+            min-height:50px;
+            border:2px solid green;
+        }
+    </style>
+    <script src="../Libraries/angular.js"></script>
+    <meta charset="utf-8" />
+    <script>
+        var showInputApp = angular.module('showInputApp', []);
+        showInputApp.controller('showInputCtrl', function ($scope) { });
+    </script>
+
+</head>
+<body ng-controller="showInputCtrl">
+    <div class="form-group" style="width:40%">
+        <label for="anyText">Text:</label>
+        <input type="text" ng-model="output" class="form-control" id="anyText" />
+        <p>{{output}}</p>
+    </div>
+</body>
+</html>

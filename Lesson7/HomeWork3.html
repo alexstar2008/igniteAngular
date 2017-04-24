@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html ng-app="menuApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <script type="text/ng-template" id="menuTemplate">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <ul class="nav">
+                    <li ng-repeat="item in items"><a href="{{item.reference}}">{{item.title}}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </script>
+    <script>
+        var app = angular.module('menuApp',[]);
+        app.controller('mainCtrl', function ($scope) {
+            $scope.data = [
+                {title:'Google',reference:'https://www.google.com.ua/'},
+                {title:'Habr',reference:'https://habrahabr.ru/'},
+            ]
+        });
+        app.directive('menuGenerator', function () {
+            return {
+                replace: true,
+                scope: {
+                    items:'=links'
+                },
+                template: function () {
+                    return angular.element(document.getElementById('menuTemplate')).html();
+                }
+            };
+        });
+    </script>
+</head>
+<body ng-controller="mainCtrl">
+    <menu-generator links="data">
+
+    </menu-generator>
+</body>
+</html>
