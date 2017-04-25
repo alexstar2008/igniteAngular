@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html ng-app="compileApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap-theme.css" rel="stylesheet" />
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <style>
+        .showBlock {
+            margin: 5%;
+        }
+
+            .showBlock * {
+                display: inline-block;
+            }
+    </style>
+    <script>
+        var app = angular.module('compileApp', []);
+        app.controller('compileCtrl', function ($scope, $compile) {
+            
+
+            $scope.getName = function ($event) {
+                $scope.name2 = "<strong>Ivan</strong>";
+                $scope.name = $compile($scope.name2)($scope);
+                angular.element(document.getElementsByTagName('span')[0]).append($scope.name);
+            }
+
+        });
+    </script>
+</head>
+<body>
+    <div class="showBlock" ng-controller="compileCtrl">
+        <input type="button" class="btn btn-primary" value="Get Name" ng-click="getName($event)" />
+        <p>Hello my name is <span id='change'></span></p>
+    </div>
+</body>
+</html>

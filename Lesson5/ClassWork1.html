@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html ng-app="parseApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+
+    <script>
+        var app = angular.module('parseApp', []);
+        app.controller('parseCtrl', ['$scope', '$parse', function ($scope, $parse) {
+            $scope.operations = [
+                '+','-','/','*'
+            ]
+            $scope.params = {};
+
+            $scope.count = function (operation) {
+                var params = {
+                    a: +$scope.params.a,
+                    b: +$scope.params.b
+                };
+                $scope.result = $parse('a' + operation + 'b')(params);
+            }
+        }]);
+    </script>
+</head>
+<body ng-controller="parseCtrl">
+    <div class="container" style="margin-top:50px">
+        <div class="btn-group">
+            <input type="text" ng-model="params.a" />
+            <input type="text" ng-model="params.b" />
+        </div>
+        <button class="btn btn-primary" ng-repeat="item in operations" ng-click="count(item)" >{{item}}</button>
+
+        <h2>Result:{{result}}</h2>
+    </div>
+</body>
+</html>
